@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NISR DATA WAREHOUSE</title>
+    <link rel="stylesheet" href="{% static 'css/warehouse_login.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="NISR Logo">
+            <span class="spacehub-title">NISR DATA WAREHOUSE</span>
+        </div>
+
+        <div class="login-card">
+            <h2>Login</h2>
+            <form method="POST" action="">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+
+                <div class="form-group password-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="btn">Sign in</button>
+            </form>
+
+             <p class="register-prompt"> <a href="#">Reset Password</a></p> 
+        </div>
+    </div>
+
+    <script src="{% static 'js/index.js' %}"></script>
+</body>
+</html>

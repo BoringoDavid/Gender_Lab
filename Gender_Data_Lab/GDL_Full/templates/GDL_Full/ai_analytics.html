@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot</title>
+
+
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'Gender_Data_Lab_App/css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'Gender_Data_Lab_App/css/ai_analytics.css' %}">
+    <link rel="stylesheet" href="{% static 'Gender_Data_Lab_Appb/css/indicator_search.css' %}">
+    <link rel="stylesheet" href="{% static 'Gender_Data_Lab_App/css/instruction.css' %}">
+    {% comment %} font awasome library loading {% endcomment %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { font-family: Poppins, sans-serif; padding: 20px; }
+        .chat-box { height: 70vh; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+        .bubble { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 75%; }
+        .user { background-color: #007BFF; color: white; align-self: flex-end; margin-left: auto; }
+        .ai { background-color: #E0DEDE; color: #222; align-self: flex-start; margin-right: auto; }
+
+        /* Typing indicator styles */
+        .typing-indicator {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 24px;
+            padding: 0 10px;
+            background-color: #E0DEDE;
+            border-radius: 20px;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            margin: 0 2px;
+            background-color: #555;
+            border-radius: 50%;
+            animation: blink 1.4s infinite both;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes blink {
+            0%, 80%, 100% { opacity: 0; }
+            40% { opacity: 1; }
+        }
+
+        /* Markdown styles */
+        .ai h1, .ai h2, .ai h3 {
+            font-weight: bold;
+            margin: 0.5em 0;
+        }
+
+        .ai p {
+            margin: 0.5em 0;
+        }
+
+        .ai ul {
+            list-style-type: disc;
+            padding-left: 1.5em;
+            margin: 0.5em 0;
+        }
+
+        .ai ol {
+            list-style-type: decimal;
+            padding-left: 1.5em;
+            margin: 0.5em 0;
+        }
+
+        .ai li {
+            margin-bottom: 0.25em;
+        }
+
+        .ai strong {
+            font-weight: bold;
+        }
+
+        .ai em {
+            font-style: italic;
+        }
+
+        .ai a {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-md w-full max-w-4xl p-6 flex flex-col gap-4"  style="margin-top: 80px;">
+        
+        <!-- Chat Display Container -->
+        <div id="chat-display" class="overflow-y-auto h-[60vh] flex flex-col gap-4 pr-2">
+            <!-- Chat bubbles will be inserted here by JS -->
+        </div>
+
+        <!-- Input and Send -->
+        <div class="flex gap-2">
+            <input id="user-input" type="text" placeholder="Ask something..." 
+                   class="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+            <button onclick="sendMessage()" 
+                    class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function formatTime() {
+            const now = new Date();
+            return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Typing animation for markdown
+        function typeMarkdown(element, markdown, callback) {
+            let index = 0;
+            const interval = setInterval(() => {
+                element.textContent += markdown[index++];
+                if (index >= markdown.length) {
+                    clearInterval(interval);
+                    element.innerHTML = marked.parse(markdown);
+                    if (callback) callback();
+                }
+            }, 15); // Speed (ms)
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById("user-input");
+            const chatBox = document.getElementById("chat-display");
+            const message = input.value.trim();
+            if (!message) return;
+
+            // User bubble
+            const userWrap = document.createElement("div");
+            userWrap.className = "self-end text-right";
+
+            const userBubble = document.createElement("div");
+            userBubble.className = "bg-blue-500 text-white px-4 py-2 rounded-2xl inline-block";
+            userBubble.textContent = message;
+
+            const timeStamp = document.createElement("div");
+            timeStamp.className = "text-xs text-gray-500 mt-1";
+            timeStamp.textContent = formatTime();
+
+            userWrap.appendChild(userBubble);
+            userWrap.appendChild(timeStamp);
+            chatBox.appendChild(userWrap);
+
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Loading indicator
+            const loadingWrap = document.createElement("div");
+            loadingWrap.className = "self-start text-left";
+            loadingWrap.id = "loading-indicator";
+
+            const loadingBubble = document.createElement("div");
+            loadingBubble.className = "typing-indicator";
+            loadingBubble.innerHTML = `<span></span><span></span><span></span>`;
+
+            loadingWrap.appendChild(loadingBubble);
+            chatBox.appendChild(loadingWrap);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Fetch backend response
+            const res = await fetch("/chat/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            });
+
+            const data = await res.json();
+
+            // Remove loading
+            const oldLoading = document.getElementById("loading-indicator");
+            if (oldLoading) oldLoading.remove();
+
+            // AI bubble container
+            const aiWrap = document.createElement("div");
+            aiWrap.className = "self-start text-left flex flex-col items-start gap-1";
+
+            // Typing bubble
+            const aiBubble = document.createElement("div");
+            aiBubble.className = "ai px-4 py-2 rounded-2xl inline-block";
+            aiWrap.appendChild(aiBubble);
+            chatBox.appendChild(aiWrap);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Meta (timestamp + copy)
+            const metaRow = document.createElement("div");
+            metaRow.className = "flex justify-between w-full text-xs text-gray-500 mt-1";
+
+            const aiTime = document.createElement("div");
+            aiTime.textContent = formatTime();
+
+            const copyBtn = document.createElement("button");
+            copyBtn.className = "flex items-center gap-1 text-blue-600 hover:underline ml-auto text-xs";
+
+            const iconSpan = document.createElement("i");
+            iconSpan.className = "fa-regular fa-copy";
+
+            const labelSpan = document.createElement("span");
+            labelSpan.textContent = "Copy";
+
+            copyBtn.appendChild(iconSpan);
+            copyBtn.appendChild(labelSpan);
+
+            copyBtn.onclick = () => {
+                navigator.clipboard.writeText(data.reply);
+                iconSpan.className = "fa-solid fa-check";
+                labelSpan.textContent = "Copied!";
+                setTimeout(() => {
+                    iconSpan.className = "fa-regular fa-copy";
+                    labelSpan.textContent = "Copy";
+                }, 2000);
+            };
+
+            // Start typing effect
+            typeMarkdown(aiBubble, data.reply, () => {
+                metaRow.appendChild(aiTime);
+                metaRow.appendChild(copyBtn);
+                aiWrap.appendChild(metaRow);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'Gender_Data_Lab_App/JS/base.js' %}"></script>
+{% endblock %}

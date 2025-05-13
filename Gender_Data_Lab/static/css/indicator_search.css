@@ -1,0 +1,166 @@
+/* Container to stay same as before */
+.dropdown-container {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 2px;
+    padding: 20px;
+    width:100%;
+    background: linear-gradient(to bottom, #e8edeb, #f8f8f8);
+    border-radius: 10px;
+}
+
+/* Make Select2 look like the original select box */
+.select2-container--default .select2-selection--single {
+    width: 100% !important; /*fixed width like before*/
+    height: auto;
+    padding: 12px 16px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    background: white;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Style the rendered text inside the box */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #333;
+    padding-left: 4px;
+    line-height: 28px;
+}
+
+/* Style the arrow */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: grey;
+}
+
+/* Style the "Browse" button */
+.browse-btn {
+    background-color: #2364d2;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-style: italic;
+    transition: background 0.3s ease;
+}
+
+.browse-btn:hover {
+    background-color: #1a4ea3;
+}
+
+
+
+/* extra css  */
+
+  /* #top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  } */
+
+  /* #analysis-page {
+    padding-top: 160px;
+  } */
+
+  #reports-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #reports-container img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  #reports-container table {
+    border-collapse: collapse;
+    width: auto;
+    margin: 0 auto;
+  }
+
+  #reports-container table, #reports-container th, #reports-container td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+  }
+
+  #reports-container th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+
+  /* #reports-container table tr td:first-child,
+  #reports-container table tr th:first-child {
+    display: none;
+  } */
+
+/*     
+     #top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    } */
+  
+    /* #analysis-page {
+      padding-top: 120px;  */
+      /* Offset for fixed header */
+    /* } */
+  
+    /* Results formatting */
+     #reports-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    #reports-container img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+  
+    #reports-container table {
+      border-collapse: collapse;
+      width: auto;
+      margin: 0 auto;
+    }
+  
+    #reports-container table, #reports-container th, #reports-container td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+  
+    #reports-container th {
+      background-color: #f4f4f4;
+      font-weight: bold;
+    } 
+
+     /* Remove row index from tables
+  #reports-container table tr td:first-child,
+  #reports-container table tr th:first-child {
+    display: none;
+  } */

@@ -1,0 +1,100 @@
+body {
+    background: #e8eef3;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.spacehub-title {
+    font-size: 24px;
+    color: #2b2d42;
+    font-weight: bold;
+}
+
+.login-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    width: 500px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color:  navy ;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid  navy ;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+.btn,.btn-side {
+    width: 100%;
+    padding: 12px;
+    background-color: navy;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-side,.btn:hover {
+    background-color: navy;
+}
+
+.forgot-link {
+    float: right;
+    font-size: 13px;
+    text-decoration: none;
+    color: navy;
+}
+
+.register-prompt {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.register-prompt a {
+    color: navy;
+    text-decoration: none;
+}

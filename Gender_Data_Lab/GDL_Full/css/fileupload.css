@@ -1,0 +1,121 @@
+body {
+    font-family: Calibri, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* --------- BUTTON STYLE --------- */
+button {
+    padding: 10px 20px;
+    margin: 10px 5px 0 0;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* --------- FORM ELEMENT STYLING --------- */
+
+/* File upload section spacing */
+.file-upload-section {
+    margin-bottom: 20px;
+}
+
+/* Input field styling */
+.input-field {
+    width: 100%;
+    padding: 8px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Hidden section toggle logic */
+#internalForm,
+#externalForm {
+    display: none;
+}
+
+/* Spacing for action buttons */
+.action-buttons {
+    margin-top: 20px;
+}
+
+/* --------- PROGRESS BAR & LOADING STYLES --------- */
+
+/* Section that holds the loading text and bar */
+.loading,
+.progress-container {
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Container background for the progress bar */
+.progress-bar {
+    width: 100%;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 20px;
+    margin-top: 5px;
+}
+
+/* The actual progress indicator */
+.progress {
+    width: 0;
+    height: 100%;
+    background-color: #4caf50;
+    text-align: center;
+    line-height: 20px;
+    color: white;
+    transition: width 0.4s ease;
+}
+
+/* --------- ALERT MESSAGES --------- */
+
+/* Base alert box */
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Success message */
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Error message */
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+
+.upperbutton button{
+text-decoration: none;
+margin-bottom: 25px;
+
+}

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+<head>
+    <head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'Gender_Data_Lab_App/css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'Gender_Data_Lab_App/css/ai_analytics.css' %}">
+    <link rel="stylesheet" href="{% static 'Gender_Data_Lab_Appb/css/indicator_search.css' %}">
+    <link rel="stylesheet" href="{% static 'Gender_Data_Lab_App/css/instruction.css' %}">
+    {% comment %} font awasome library loading {% endcomment %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+</head>
+
+{% block content %}
+<div class="home-top">
+    <div class="home-top-grid">
+        <div class="home-top-left">
+            <p class="home-p">Welcome to our Gender Lab Indicators Analytical tool</p>
+        </div>
+        <div class="home-top-right">
+            <img src="{% static 'images/v1.png' %}" alt="Visualisation Image">
+        </div>
+    </div> 
+    <div class="home-bottom">
+        <p>
+            This AI tool combines a reproducible analytical 
+            pipeline with advanced AI capabilities to facilitate 
+            question answering about education and agriculture indicators. 
+            It empowers users to query the database for actionable insights.
+        </p>
+        <button>Instructions</button>
+    </div>
+</div>
+
+<div class="instruction-grid">
+    <div class="inst-left">
+        <img src="{% static 'images/v1.png' %}" alt="Visualisation Image">
+    </div>
+    <div class="inst-right">
+        <h2 class="inst-h2">Get gender related insights in various sectors</h2>
+        <p class="instr-p">You can learn about gender distribution across the agriculture sector</p>
+    </div>
+</div>
+
+<div class="about-gender-data-Lab">
+    <h1>About The Gender Lab</h1>
+    <p class="about-paragraph">
+        The Gender Data Lab is designed to present relevant information on 
+        gender equality as part of a collaboration between Paris 21, 
+        the National Institute of Statistics of Rwanda (NISR), the 
+        Gender Monitoring Office (GMO), and other ministries like MINEDUC, and 
+        National Land Authority...
+    </p>
+</div>
+
+<div class="main-partner">
+  <h2 class="title-partners">Our Partners</h2>
+  <div class="partners">
+    {% for i in "12" %}
+    <div class="partner-item">
+        <img src="{% static 'images/nisr-partner.png' %}" alt="Partner logo">
+        <h4 class="pertner-title">National Institute of Statistics of Rwanda (NISR)</h4>
+        <p class="link"><a href="#" class="pertner-website">Visit Website</a></p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="indicators">
+    <div class="upper-indicator-section">
+        <h1>Processed Indicators</h1>
+        <p>
+            The current focus is on education and agricultural indicators where using available 
+            data our analytical pipeline produces visualization on education and land ownership indicators...
+        </p>
+    </div>
+    <div class="lower-section"> 
+        <div class="indicator-item">
+            <h2 class="indicator-item-indicator-count">4</h2>
+            <h2 class="indicator-item-title">Land Ownership</h2>
+            <p class="indicator-item-Description">
+                These indicators provide gender insights on sustainable practices and distribution 
+                within Rwanda's agricultural sector...
+            </p>
+        </div>
+        <div class="indicator-item">
+            <h2 class="indicator-item-indicator-count">10</h2>
+            <h2 class="indicator-item-title">Education</h2>
+            <p class="indicator-item-Description">
+                The education indicators spotlight gender dynamics in 
+                student and teacher distribution...
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

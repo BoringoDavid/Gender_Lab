@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<head>
+   <script src="{% static 'js/dashboard.js' %}"></script>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+   
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+</head>
+
+{% block content %}
+<body>
+
+{% if messages %}
+<div id="messages">
+  {% for message in messages %}
+    <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+      {{ message }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="container">
+  <h2>FILE MANAGEMENT OF WAREHOUSE</h2>
+
+
+  <form id="uploadForm" method="post" enctype="multipart/form-data" action="{% url 'upload_file' %}">
+
+    {% csrf_token %}
+
+  <!-- Source Type Selection -->
+  <label for="sourceType">Source:</label>
+  <select id="sourceType" name="source_type" onchange="toggleFormSections()">
+    <option value="" disabled selected>-- Choose Source Type --</option>
+    <option value="internal">Internal</option>
+    <option value="external">External</option>
+  </select>
+  <br><br>
+
+  <!-- Hidden input to keep value -->
+  <input type="hidden" id="hidden_source_type" name="hidden_source_type" value="">
+
+    <!-- Internal Form -->
+    <div id="internalForm" class="form-section" style="display:none;">
+      <input type="file" id="dataFile_internal" name="dataFile"><br><br>
+    
+      <label for="survey_title"><strong>Survey Name / Title:</strong></label><br>
+      <input type="text" id="survey_title" name="survey_title" class="input-field"><br><br>
+    
+      <label for="start_date"><strong>Starting Date:</strong></label><br>
+      <input type="date" id="start_date" name="start_date" class="input-field"><br><br>
+    
+      <label for="end_date"><strong>Ending Date:</strong></label><br>
+      <input type="date" id="end_date" name="end_date" class="input-field"><br><br>
+    
+      <label for="frequency"><strong>Time Frequency:</strong></label><br>
+      <select id="frequency" name="frequency" class="input-field">
+        <option value="" disabled>-- Select Frequency of survey/ Census--</option>
+        <option value="After 5 years">After 5 years</option>
+        <option value="After 4 years">After 4 years</option>
+        <option value="After 3 years">After 3 years</option>
+        <option value="After 2 years">After 2 years</option>
+        <option value="annual">Annual</option>
+        <option value="quarterly">Quarterly</option>
+        <option value="monthly">Monthly</option>
+      </select><br><br>
+      <label for="description_internal"><strong>General Data Description:</strong></label><br>
+      <textarea id="description_internal" name="description_internal" class="input-field" rows="3"></textarea><br><br>
+    </div>
+    
+    <!-- External Form -->
+    <div id="externalForm" class="form-section" style="display:none;">
+      <input type="file" id="dataFile_external" name="dataFile"><br><br>
+    
+      <label for="description_external"><strong>General Data Description:</strong></label><br>
+      <textarea id="description_external" name="description_external" class="input-field" rows="3"></textarea><br><br>
+    
+      <label for="metadataSelector"><strong>Additional Metadata</strong></label><br>
+      <select id="metadataSelector" class="input-field" onchange="handleMetadataChange(this)">
+        <option value="">-- Select --</option>
+        <option value="add_new">Add new metadata</option>
+      </select><br><br>
+    
+      <div id="metadata-fields"></div>
+    </div>
+    
+  <!-- shared functions for file submisssion on server-->
+  <div>
+      <button type="button" onclick="submitToServer()">Upload</button>
+      <button type="button" onclick="simulateUpload()">Send to Server</button>
+  </div>
+
+  </form>
+
+  <div id="loading" class="loading">
+    <div class="progress-bar">
+      <div id="progress" class="progress"></div>
+    </div>
+    <p id="progressText">Processing....</p>
+  </div>
+</div>
+</body>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'Gender_Data_Lab_App/JS/base.js' %}"></script>
+<script src="{% static 'js/fileupload.js' %}" defer></script>
+{% endblock %}

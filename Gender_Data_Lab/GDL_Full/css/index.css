@@ -1,0 +1,200 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: navy; /*navy */
+    padding: 10px 30px;
+}
+
+.nav-left .logo {
+    height: 100%;
+}
+
+.nav-center a {
+    color: white;
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 16px;
+}
+.nav-center a:hover {
+    text-decoration: none;
+
+}
+
+.nav-right .feedback-button {
+    background-color: white;
+    color: #007b75;  
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.feedback-button:hover {
+    background-color: #f0f0f0;
+}
+/*styling the top section of welcome page (instruction)*/
+.home-top{
+    background-color: #122359;
+    padding: 0px 40px;
+    padding-bottom: 5%;
+}
+.home-top-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0px;
+    background-color: transparent;
+    color:#fff;
+}
+.home-top-left p{
+    font-size: 64px;
+    color:white;
+}
+
+.home-top-right{
+    width: 100%;
+    height: 100%;
+    margin:20% 0%;
+}
+.home-top-right img {
+    width: 100%;
+    height: 60%;
+    border-radius: 10px; 
+}
+.home-bottom p{
+    padding-right: 50%;
+    color:#fff;
+    font-size: 24px;
+}
+.home-bottom button{
+    background-color:transparent;
+    border-color: #fff;
+    font-size: 24px;
+    color:#fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+
+/* for styling the  Instructions section */
+.instruction-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 30px;
+    padding: 5% 7.5%;
+    align-items: center;
+    background-color: #f2f2f2;
+}
+/* Left side (Image) */
+.inst-left img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+/* Right side (Text) */
+.inst-right {
+    padding: 10px;
+    color: #333;
+}
+
+.inst-h2 h2 {
+    margin-bottom: 15px;
+    font-size: 48px;
+}
+
+.instr-p {
+    font-size: 24px;
+    color: #444;
+}
+
+/* for styling the  the about gender data lab */
+.underinstruction,
+.instruction,
+.about-gender-data-Lab{
+    color:#000;
+    font-size: 24px;
+    background-color: #fff;
+    margin: 10px 40px;
+}
+.main-partner{
+ background-color:#F2F2F2;
+}
+.title-partners{
+    padding:5px  40px;
+    padding-top:80;
+    background-color:#F2F2F2;
+}
+/* for styling the parter section */
+.partners {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    padding: 10px 40px;
+    text-align: center;
+}
+
+.partner-item {
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+.prtner-item img {
+    max-width: 100px;
+    margin-bottom: 15px;
+}
+.partner-title {
+    font-size: 18px;
+    color: #132a74;
+    margin-bottom: 10px;
+}
+.partner-website {
+    text-decoration: none;
+    color: #007b75;
+    font-weight: bold;
+}
+.partners a{
+    color: #000;
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 16px;
+}
+
+
+/*  styling for processed indicators */
+.indicators{
+    padding:0px 40px;
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+.upper-indicator-section p{
+    margin-right: 50%;
+}
+.indicators p{
+    font-size: 20px;
+}
+
+/* styling grid of indicators lower section */
+.lower-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 10px 40px;
+    border-radius: 20px;
+    text-align: start;
+    background-color: #272424;
+    color:#fff;
+    box-shadow: 6px 6px 15px lightgrey;
+}
+
+
+/*  for the Indicator Search */
+

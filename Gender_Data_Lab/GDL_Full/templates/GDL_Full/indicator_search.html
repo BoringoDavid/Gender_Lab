@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Indicator Search{% endblock %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'Gender_Data_Lab_App/css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'Gender_Data_Lab_App/css/ai_analytics.css' %}">
+    <link rel="stylesheet" href="{% static 'Gender_Data_Lab_Appb/css/indicator_search.css' %}">
+    <link rel="stylesheet" href="{% static 'Gender_Data_Lab_App/css/instruction.css' %}">
+    {% comment %} font awasome library loading {% endcomment %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    #analysis-page{
+        margin-top: 0px;
+    }
+</style>
+
+</head>
+<div id="analysis-page">
+  
+    <form method="POST" id="survey-form" >
+        <div class="dropdown-container">
+            {% csrf_token %}
+            <div class="dropdown">
+                <select id="sector-select" onchange="myChanges()">
+                    <option value="" disabled selected>Select Survey Name</option>
+
+                        {% for survey in surveys %}
+                        <option value="{{ survey.survey_id }}">
+                            {{ survey.survey_name }} ({{ survey.year.year }})
+                        </option>
+                        {% endfor %}         
+                </select>
+            </div>
+
+        
+
+            <div class="dropdown">
+                <select id="indicator-select" name="indicator">
+                    <option value="" disabled selected>Select Indicator</option>
+                    
+                </select>
+            </div>
+            
+            <button type="submit" class="browse-btn">Browse</button>
+            </div>
+    </form>
+  
+
+   <div id="reports-container" class="mt-4">
+        <div>
+            {{ indicator }}
+        </div>
+    
+        {% if table_html %}
+            <div class="mt-4">{% autoescape off %}{{ table_html }}{% endautoescape %}</div>
+        {% endif %}
+        <br>
+        {% if img_base64 %}
+            <img src="data:image/png;base64,{{ img_base64 }}" alt="Plot">
+        {% endif %}
+
+        {% if download_url %}
+        <a href="{{ download_url }}" class="mt-4 inline-block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Download Report (.docx)</a>
+        {% endif %}
+
+        {% if selected_dataset and selected_indicator %}
+        <!-- Download Report Button -->
+        <form method="POST" action="{% url 'download_report' %}">
+          {% csrf_token %}
+          <input type="hidden" name="dataset" value="{{ selected_dataset }}">
+          <input type="hidden" name="indicator" value="{{ selected_indicator }}">
+          <button type="submit" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+            Download Report (.docx)
+          </button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+
+{% block extra_css %}
+{% comment %} <link rel="stylesheet" href="{% static 'Gender_Data_Lab_App/css/indicator_search.css' %}"> {% endcomment %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#sector-select').select2({
+            placeholder: "Select Survey Name",
+            allowClear: true,
+            width: '100%'  
+        });
+
+        $('#indicator-select').select2({
+            placeholder: "Select Indicator",
+            allowClear: true,
+            width: '100%' 
+        });
+
+        
+    });
+    
+
+
+    {% comment %} indicator population {% endcomment %}
+
+    function myChanges(){
+       const surveyId = document.getElementById('sector-select').value;
+        const indicatorSelect = document.getElementById('indicator-select');
+        indicatorSelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
+
+        fetch(`/get-indicators/${surveyId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    indicatorSelect.innerHTML = '<option value="" disabled selected>Select Indicator</option>';
+                    data.indicators.forEach(function(indicator) {
+                        const option = document.createElement('option');
+                        option.value = indicator.name;
+                        option.textContent = indicator.name;
+                        indicatorSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    indicatorSelect.innerHTML = '<option value="" disabled selected>Error loading</option>';
+                    console.error('Error:', error);
+                });
+
+
+                const form = document.getElementById("survey-form");
+
+                if (surveyId) {
+                    form.action = `/analyze_indicator/${surveyId}/`;
+                } else {
+                    alert("Please select a survey first.");
+                }
+    }
+
+/*const surveyId = document.getElementById('sector-select').value;*/
+
+</script>
+
+{% endblock %}
+
+
